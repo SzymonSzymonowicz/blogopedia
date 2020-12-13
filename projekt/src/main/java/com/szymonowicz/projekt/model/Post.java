@@ -31,7 +31,10 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.MERGE,
+            CascadeType.PERSIST
+    })
     @JoinTable(name = "post_author",
             joinColumns = { @JoinColumn(name = "post_id") },
             inverseJoinColumns = { @JoinColumn(name = "author_id")}

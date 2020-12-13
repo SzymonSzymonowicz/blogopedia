@@ -19,6 +19,10 @@
     {
       font-size: 0.9rem
     }
+    body
+    {
+      background: lightblue;
+    }
   </style>
 
 </head>
@@ -61,7 +65,7 @@
                       <textarea th:field="*{tags}" class="form-control" id="postTags" rows="1" placeholder="Tag your post..."></textarea>
                     </div>
                     <div class="form-group">
-                      <label for="postAuthor">Choose a user</label>
+                      <label for="postAuthor">Who are you?</label>
                       <select th:field="*{authorId}" class="form-control" id="postAuthor">
                         <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.username}"></option>
                       </select>
@@ -106,7 +110,9 @@
 
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item text-primary" href="#">Edit</a>
-                    <a class="dropdown-item text-primary" href="#">Delete</a>
+                    <form method="get" th:action="@{/post/delete/{id}(id = ${post.id})}">
+                      <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -136,7 +142,7 @@
                     <section class="mt-3">
                       <form th:object="${comment}" method="POST" th:action="@{/comment/{id}(id = ${post.id})}">
                         <div class="form-group">
-                          <label for="commentAuthor">Choose a user</label>
+                          <label for="commentAuthor">Who are you?</label>
                           <select th:field="*{username}" class="form-control" id="commentAuthor">
                             <option th:each="author: ${authors}" th:attr="value = ${author.username}" th:text="${author.username}"></option>
                           </select>
@@ -170,7 +176,9 @@
 
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item text-primary" href="#">Edit</a>
-                                <a class="dropdown-item text-primary" href="#">Delete</a>
+                                <form method="get" th:action="@{/comment/delete/{id}(id = ${comment.id})}">
+                                  <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                                </form>
                               </div>
                             </div>
                           </div>
@@ -218,13 +226,13 @@
             <div class="card-body p-3">
               <h5 class="card-title my-2 mx-0">Users Statistics</h5>
               <div class="list-group list-group-flush">
-                <label for="userSelect">Choose a user</label>
-                <select class="form-control" id="userSelect">
-                  <option>author1</option>
-                  <option>author2</option>
-                  <option>author3</option>
-                </select>
-                <a href="#" class="btn btn-sm btn-primary mt-4">Get</a>
+                <form method="GET" th:action="@{/stats}">
+                  <label for="userStats">Choose a user</label>
+                  <select name="id" class="form-control" id="userStats">
+                    <option th:each="author: ${authors}" th:value = "${author.id}" th:text="${author.username}"></option>
+                  </select>
+                  <button type="submit" class="btn btn-sm btn-primary mt-4">Get</button>
+                </form>
               </div>
             </div>
           </div>

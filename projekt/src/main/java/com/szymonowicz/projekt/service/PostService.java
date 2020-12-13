@@ -41,4 +41,23 @@ public class PostService {
         postRepository.save(post);
     }
 
+    public void deletePost(long postId){
+        Optional<Post> postOptional = postRepository.findById(postId);
+
+        if(!postOptional.isPresent())
+            return;
+
+        postRepository.deleteById(postOptional.get().getId());
+    }
+
+    public int countPostsForAuthorId(long authorId) {
+        List<Post> posts = postRepository.findAll();
+        int sum = 0;
+
+        for (Post post : posts) {
+            sum += post.getAuthors().stream().filter(author -> author.getId() == authorId).count();
+        }
+
+        return sum;
+    }
 }
