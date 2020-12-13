@@ -1,5 +1,6 @@
 package com.szymonowicz.projekt.service;
 
+import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.repository.PostRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,19 @@ public class PostService {
 
     public List<Post> getAllPosts(){
         return postRepository.findAll();
+    }
+
+    public void addComment(long postId, Comment comment){
+        Optional<Post> postOptional = postRepository.findById(postId);
+
+        if(!postOptional.isPresent())
+            return;
+
+        Post post = postOptional.get();
+        List<Comment> postComments = post.getComments();
+        postComments.add(comment);
+
+        postRepository.save(post);
     }
 
 }

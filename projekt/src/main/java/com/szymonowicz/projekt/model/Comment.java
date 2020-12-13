@@ -17,7 +17,7 @@ public class Comment {
     private long id;
 
     private String username;
-    //private long postId;
+
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     private String commentContent;
