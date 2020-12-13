@@ -139,7 +139,7 @@
                 <div class="collapse" th:id="${'collapse_' + post.getId()}">
                   <div class="card border border-right-0 border-left-0 border-bottom-0 mt-1">
                     <!-- new comment form -->
-                    <section class="mt-3">
+                    <section class="mt-3 mx-2">
                       <form th:object="${comment}" method="POST" th:action="@{/comment/{id}(id = ${post.id})}">
                         <div class="form-group">
                           <label for="commentAuthor">Who are you?</label>
@@ -157,7 +157,7 @@
                     </section>
                     <!-- comment card bgins -->
                     <section>
-                      <div th:each="comment: ${post.getComments()}" class="card p-2 mt-3">
+                      <div th:each="comment: ${post.getComments()}" class="card p-2 mt-3 mx-2">
                         <!-- comment header -->
                         <div class="d-flex">
                           <div class="">
@@ -175,7 +175,9 @@
                               </a>
 
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item text-primary" href="#">Edit</a>
+                                <form method="get" th:action="@{/comment/edit/{id}(id = ${comment.id})}">
+                                  <button type="submit" class="dropdown-item text-primary" >Edit</button>
+                                </form>
                                 <form method="get" th:action="@{/comment/delete/{id}(id = ${comment.id})}">
                                   <button type="submit" class="dropdown-item text-primary" >Delete</button>
                                 </form>

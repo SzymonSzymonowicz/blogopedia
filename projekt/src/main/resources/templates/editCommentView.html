@@ -34,13 +34,13 @@
             <span hidden="hidden">place holder</span>
         </div>
         <div class="col-6">
-            <!-- edit post card -->
+            <!-- edit comment card -->
             <section class="card mt-4">
                 <div class="border p-2">
                     <!-- card header -->
                     <div class="row m-0">
                         <div class="display-4 text-center">
-                            Edit post
+                            Edit comment
                         </div>
                         <div class="">
                             <a class="text-decoration-none" href="#">
@@ -49,31 +49,19 @@
                         </div>
                         <div class="flex-grow-1 pl-2">
                             <a class="text-decoration-none" href="#">
-                                <h2 class="text-capitalize h5 mb-0" th:each="author: ${post.authors}">
-                                    <span th:text="${author.username}"/>
-                                </h2>
+                                <h2 class="text-capitalize h5 mb-0" th:text="${comment.username}"/>
                             </a>
-                            <ul class="list-inline small text-secondary m-0 mt-1"  >
-                                <li class="list-inline-item small text-secondary m-0 mt-1" th:each="tag: ${#strings.arraySplit(post.getTags(), ' ')}" th:text="${'#' + tag + ' '}" />
-                            </ul>
                         </div>
                     </div>
                     <!-- card body -->
                     <div class="">
-                        <form method="POST" th:object="${postDTO}" th:action="@{/post/edit/{postId}(postId = ${post.id})}">
+                        <div class="">
+                            <p th:text="${comment.commentContent}" class="my-2"></p>
+                        </div>
+                        <form method="POST" th:object="${editedComment}" th:action="@{/comment/edit/{id}(id = ${comment.id})}">
                             <div class="form-group">
                                 <label class="sr-only" for="postContent">post</label>
-                                <textarea th:field="*{postContent}" class="form-control" id="postContent" rows="3" placeholder="Edit post content"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="postTags">tags</label>
-                                <textarea th:field="*{tags}" class="form-control" id="postTags" rows="1" placeholder="Edit tags"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="postAuthor">Who are you?</label>
-                                <select th:field="*{authorId}" class="form-control" id="postAuthor">
-                                    <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.username}"></option>
-                                </select>
+                                <textarea th:field="*{commentContent}" class="form-control" id="postContent" rows="3" placeholder="Edit post content"></textarea>
                             </div>
                             <div class="text-center my-2">
                                 <button type="submit" class="btn btn-primary">Edit</button>
