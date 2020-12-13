@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Controller
 public class StatisticsController {
+
     private PostService postService;
     private CommentService commentService;
     private AuthorService authorService;

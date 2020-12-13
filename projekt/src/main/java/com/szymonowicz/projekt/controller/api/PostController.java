@@ -17,9 +17,14 @@ public class PostController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/api/post")
-    public List<Post> getPosts(){
-        return postService.getAllPosts();
+    @GetMapping("/api/post/author/{id}")
+    public ResponseEntity<List<Post>> getPosts(@PathVariable("id") long authorId){
+        List<Post> allPostsForAuthorId = postService.getAllPostsForAuthorId(authorId);
+
+        if(!allPostsForAuthorId.isEmpty())
+            return new ResponseEntity<>(allPostsForAuthorId, HttpStatus.OK);
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/api/post/{id}")

@@ -60,7 +60,7 @@
                       <label class="sr-only" for="postContent">post</label>
                       <textarea th:field="*{postContent}" class="form-control" id="postContent" rows="3" placeholder="What are you thinking..."></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group my-2">
                       <label class="sr-only" for="postTags">post</label>
                       <textarea th:field="*{tags}" class="form-control" id="postTags" rows="1" placeholder="Tag your post..."></textarea>
                     </div>
@@ -70,11 +70,9 @@
                         <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.username}"></option>
                       </select>
                     </div>
-
-
                   </div>
                 </div>
-                <div class="text-right">
+                <div class="text-right mt-2">
                   <button type="submit" class="btn btn-primary">share</button>
                 </div>
               </form>
@@ -109,7 +107,9 @@
                   </a>
 
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item text-primary" href="#">Edit</a>
+                    <form method="get" th:action="@{/post/edit/{postId}(postId = ${post.id})}">
+                      <button type="submit" class="dropdown-item text-primary" >Edit</button>
+                    </form>
                     <form method="get" th:action="@{/post/delete/{id}(id = ${post.id})}">
                       <button type="submit" class="dropdown-item text-primary" >Delete</button>
                     </form>
@@ -147,7 +147,7 @@
                             <option th:each="author: ${authors}" th:attr="value = ${author.username}" th:text="${author.username}"></option>
                           </select>
                         </div>
-                        <div class="input-group input-group">
+                        <div class="input-group input-group mt-2">
                           <input th:field="*{commentContent}" type="text" class="form-control" placeholder="Write Comment" aria-label="Recipient's username" aria-describedby="basic-addon2">
                           <div class="input-group-append">
                             <button class="text-decoration-none text-white btn btn-primary" type="submit">Comment</button>

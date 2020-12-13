@@ -10,10 +10,7 @@ import com.szymonowicz.projekt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -67,17 +64,6 @@ public class PostController {
         return "redirect:/";
     }
 
-    @PostMapping("/comment/{id}")
-    public String addCommentToPost(@PathVariable(name = "id") long postId, Comment comment){
-        Comment saveComment = new Comment();
-        saveComment.setUsername(comment.getUsername());
-        saveComment.setCommentContent(comment.getCommentContent());
-
-        postService.addComment(postId, saveComment);
-        return "redirect:/";
-    }
-
-
     @GetMapping("/post/delete/{id}")
     public String deletePost(@PathVariable(name = "id") long postId){
         postService.deletePost(postId);
@@ -85,10 +71,38 @@ public class PostController {
         return "redirect:/";
     }
 
-    @GetMapping("/comment/delete/{id}")
-    public String deleteComment(@PathVariable(name = "id") long commentId){
-        commentService.deleteComment(commentId);
+    @GetMapping("/post/edit/{postId}")
+    public String editPostView(@PathVariable(name = "postId") long postId, Model model){
+        Optional<Post> postOptional = postService.getPost(postId);
+
+        if(!postOptional.isPresent())
+            return "redirect:/";
+
+        Post post = postOptional.get();
+
+        PostDTO postDTO = new PostDTO();
+        postDTO.setPostContent(post.getPostContent());
+        postDTO.setTags(post.getTags());
+
+        model.addAttribute("post", post);
+        model.addAttribute("postDTO", postDTO);
+        model.addAttribute("authors", authorService.getAllAuthors());
+
+        return "editPostView";
+    }
+
+    @PostMapping("/post/edit/{postId}")
+    public String editPost(@PathVariable(name = "postId") long postId, PostDTO updatedPostDTO){
+        Optional<Author> authorOptional = authorService.getAuthorById(updatedPostDTO.getAuthorId());
+
+        if(!authorOptional.isPresent()) {
+            System.out.println("There isn't any user of id --> " + updatedPostDTO.getAuthorId() + " <--");
+        }
+        Author author = authorOptional.get();
+
+        postService.editPost(author, postId, updatedPostDTO);
 
         return "redirect:/";
     }
+
 }
