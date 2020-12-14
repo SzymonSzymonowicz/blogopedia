@@ -1,6 +1,7 @@
 package com.szymonowicz.projekt.service;
 
 import com.szymonowicz.projekt.dto.PostDTO;
+import com.szymonowicz.projekt.model.Attachment;
 import com.szymonowicz.projekt.model.Author;
 import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.model.Post;
@@ -150,5 +151,22 @@ public class PostService {
         }
 
         return result;
+    }
+
+    public void addAttachment(long postId, String filename){
+        Optional<Post> postOptional = postRepository.findById(postId);
+
+        if(!postOptional.isPresent()){
+            log.info("Post with id -> " + postId + " <- doesn't exist!");
+            return;
+        }
+
+        Post post = postOptional.get();
+
+        Attachment attachment = new Attachment();
+        attachment.setFileName(filename);
+        post.getAttachments().add(attachment);
+
+        postRepository.save(post);
     }
 }
