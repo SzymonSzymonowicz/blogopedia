@@ -10,3 +10,6 @@
 
 #### Baza danych:
 * H2 (in-memory)
+
+#### Deploy:
+* [Heroku](https://blogopedia.herokuapp.com/)
