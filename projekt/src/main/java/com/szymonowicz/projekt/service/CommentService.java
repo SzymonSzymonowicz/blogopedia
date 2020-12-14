@@ -5,6 +5,7 @@ import com.szymonowicz.projekt.repository.CommentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,5 +62,17 @@ public class CommentService {
         commentFromDb.setCommentContent(updatedComment.getCommentContent());
 
         commentRepository.save(commentFromDb);
+    }
+
+    public List<Comment> getCommentsForAuthorUsername(String username) {
+        List<Comment> comments = commentRepository.findAll();
+        List<Comment> result = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            if(username.equals(comment.getUsername()))
+                result.add(comment);
+        }
+
+        return result;
     }
 }

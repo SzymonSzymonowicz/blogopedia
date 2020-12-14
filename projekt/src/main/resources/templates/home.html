@@ -19,7 +19,7 @@
 
 </head>
 <body>
-
+    <!-- left navbar -->
     <div class="container-fluid my-5">
       <div class="row">
         <div class="col-3 sticky-top" style="height: 100%; top: 3em">
@@ -29,6 +29,21 @@
               <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
               <p class="card-text">Placeholder for some feature, may come handy soon.</p>
               <a href="#" class="btn btn-sm btn-primary">Do something</a>
+            </div>
+          </div>
+          <!-- user statistics card -->
+          <div class="card mt-4">
+            <div class="card-body p-3">
+              <h5 class="card-title my-2 mx-0">Users Statistics</h5>
+              <div class="list-group list-group-flush">
+                <form method="GET" th:action="@{/stats}">
+                  <label for="userStats">Choose a user</label>
+                  <select name="id" class="form-control" id="userStats">
+                    <option th:each="author: ${authors}" th:value = "${author.id}" th:text="${author.username}"></option>
+                  </select>
+                  <button type="submit" class="btn btn-sm btn-primary mt-4">Get</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -213,37 +228,40 @@
           </section>
           <!-- Post Ends -->
         </div>
-        <!-- Right nabar -->
+        <!-- Right navbar -->
         <div class="col-3 sticky-top" style="height: 100%; top: 3em">
           <div class="card">
             <div class="card-body p-3">
-              <h5 class="card-title my-2 mx-0">Search</h5>
+              <h5 class="card-title my-2 mx-0">Search for post</h5>
               <div class="list-group list-group-flush">
-                <label for="searchForSelect">For</label>
-                <select class="form-control" id="searchForSelect">
-                  <option>posts</option>
-                  <option>comments</option>
-                </select>
-                <label for="searchBySelect">By</label>
-                <select class="form-control" id="searchBySelect">
-                  <option>author</option>
-                  <option>tag</option>
-                  <option>id</option>
-                </select>
-                <a href="#" class="btn btn-sm btn-primary mt-4">View All</a>
+                <form method="GET" action="#" th:action="@{/search/post}">
+                  <label for="searchBySelect">By</label>
+                  <select name="by" class="form-control mt-2" id="searchBySelect">
+                    <option>author</option>
+                    <option>content</option>
+                    <option>id</option>
+                    <option>tag</option>
+                  </select>
+                  <label class="mt-2" for="postSearch">Value</label>
+                  <textarea name="value" class="form-control" id="postSearch" rows="1" placeholder="Value"></textarea>
+                  <button type="submit" class="btn btn-sm btn-primary mt-4">View All</button>
+                </form>
               </div>
             </div>
           </div>
           <div class="card mt-4">
             <div class="card-body p-3">
-              <h5 class="card-title my-2 mx-0">Users Statistics</h5>
+              <h5 class="card-title my-2 mx-0">Search for all of user's</h5>
               <div class="list-group list-group-flush">
-                <form method="GET" th:action="@{/stats}">
-                  <label for="userStats">Choose a user</label>
-                  <select name="id" class="form-control" id="userStats">
-                    <option th:each="author: ${authors}" th:value = "${author.id}" th:text="${author.username}"></option>
+                <form method="GET" action="#" th:action="@{/search/user}">
+                  <label for="userSearchSelect">For</label>
+                  <select name="for" class="form-control" id="userSearchSelect">
+                    <option>posts</option>
+                    <option>comments</option>
                   </select>
-                  <button type="submit" class="btn btn-sm btn-primary mt-4">Get</button>
+                  <label class="mt-2" for="usernameSearch">Username</label>
+                  <textarea name="username" class="form-control" id="usernameSearch" rows="1" placeholder="Username"></textarea>
+                  <button type="submit" class="btn btn-sm btn-primary mt-4">View All</button>
                 </form>
               </div>
             </div>

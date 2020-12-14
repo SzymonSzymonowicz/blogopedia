@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -99,5 +100,37 @@ public class PostService {
         postFromDb.setTags(updatedPostDTO.getTags());
 
         postRepository.save(postFromDb);
+    }
+
+    public List<Post> getPostsBy(String by, String value) {
+        List<Post> allPosts = postRepository.findAll();
+        List<Post> result = new ArrayList<>();
+
+        if(by.equals("id")){
+            Optional<Post> byId = postRepository.findById(Long.valueOf(value));
+
+            if(byId.isPresent())
+                result.add(byId.get());
+        }else if(by.equals("tag")){
+            for(Post post : allPosts) {
+                if(Arrays.stream(post.getTags().split(" ")).anyMatch(tag -> tag.equals(value))){
+                    result.add(post);
+                }
+            }
+        }else if(by.equals("author")){
+            for(Post post: allPosts){
+                if(post.getAuthors().stream().anyMatch(author -> author.getUsername().equals(value))){
+                    result.add(post);
+                }
+            }
+        }else if(by.equals("content")){
+            for(Post post: allPosts){
+                if(Arrays.stream(post.getPostContent().split("\\W+")).anyMatch(word -> word.equals(value))){
+                    result.add(post);
+                }
+            }
+        }
+
+        return result;
     }
 }
