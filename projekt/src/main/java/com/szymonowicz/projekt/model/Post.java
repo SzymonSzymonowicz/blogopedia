@@ -20,10 +20,17 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     private String postContent;
+
     private String tags;
+
+    @ToString.Exclude
+    @OneToMany(targetEntity = Attachment.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private List<Attachment> attachments = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)

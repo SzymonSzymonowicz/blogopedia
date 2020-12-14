@@ -1,0 +1,11 @@
+Projekt z pythona
+
+TEMAT NR 6
+
+6. Zapoznać się z narzędziami do wykonywania stemming-u tekstów w języku
+angielskim. Na wybranych tekstach przeprowadzić eksperymenty z różnymi
+stemmerami i skomentować wykonane eksperymenty
+
+Na 1 zajecia po swieta
+
+Za tydzień koło
