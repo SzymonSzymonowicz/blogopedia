@@ -41,7 +41,6 @@ public class CommentController {
     @PostMapping("/comment/{id}")
     public String addCommentToPost(@PathVariable(name = "id") long postId, @Valid @ModelAttribute("comment") Comment comment, Errors errors, Model model){
         if(errors.hasErrors()){
-            //System.out.println(errors);
             model.addAttribute("posts", postService.getAllPosts());
             model.addAttribute("authors", authorService.getAllAuthors());
             model.addAttribute("postDTO", new PostDTO());

@@ -133,4 +133,22 @@ public class PostService {
 
         return result;
     }
+
+    public List<Post> getAllPostsOrdered(String orderBy, String direction) {
+        List<Post> result = new ArrayList<>();
+
+        if(orderBy.equals("id")){
+            if(direction.equals("asc"))
+                result = postRepository.findAllByOrderByIdAsc();
+            else if(direction.equals("desc"))
+                result = postRepository.findAllByOrderByIdDesc();
+        }else if(orderBy.equals("content")){
+            if(direction.equals("asc"))
+                result = postRepository.findAllByOrderByPostContentAsc();
+            else if(direction.equals("desc"))
+                result = postRepository.findAllByOrderByPostContentDesc();
+        }
+
+        return result;
+    }
 }

@@ -5,35 +5,26 @@ import com.szymonowicz.projekt.model.Author;
 import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.service.AuthorService;
-import com.szymonowicz.projekt.service.CommentService;
 import com.szymonowicz.projekt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class PostController {
 
     private PostService postService;
-    private CommentService commentService;
     private AuthorService authorService;
 
     @Autowired
-    public PostController(PostService postService, AuthorService authorService, CommentService commentService) {
+    public PostController(PostService postService, AuthorService authorService) {
         this.postService = postService;
         this.authorService = authorService;
-        this.commentService = commentService;
     }
 
     @GetMapping("/")
@@ -47,13 +38,25 @@ public class PostController {
         return "home";
     }
 
+    @GetMapping("/order")
+    public String orderPost(@RequestParam String orderBy, @RequestParam String direction, Model model){
+        List<Post> allPosts = postService.getAllPostsOrdered(orderBy, direction);
+
+        model.addAttribute("posts", allPosts);
+        model.addAttribute("authors", authorService.getAllAuthors());
+        model.addAttribute("postDTO", new PostDTO());
+        model.addAttribute("comment", new Comment());
+
+        return "home";
+    }
+
     @PostMapping("/post")
     public String addPost(@Valid @ModelAttribute("postDTO") PostDTO postDTO, Errors errors, Model model){
         Optional<Author> author = authorService.getAuthorById(postDTO.getAuthorId());
 
         if(!author.isPresent())
-          // TODO maybe handiling author not found, realistically it will not ever occur, because author is selected from select of authors from database
-          return "home";
+            // as authorId is taken from select of all Authors, it should never occur, nevertheless just for being sure
+            return "home";
 
         if(errors.hasErrors()){
             model.addAttribute("posts", postService.getAllPosts());

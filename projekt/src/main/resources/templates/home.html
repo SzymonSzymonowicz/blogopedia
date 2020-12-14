@@ -19,16 +19,29 @@
 
 </head>
 <body>
-    <!-- left navbar -->
+    <!-- left navbar orderBy, direction -->
     <div class="container-fluid my-5">
       <div class="row">
         <div class="col-3 sticky-top" style="height: 100%; top: 3em">
+          <!-- order posts card -->
           <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Left navbar</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Placeholder for some feature, may come handy soon.</p>
-              <a href="#" class="btn btn-sm btn-primary">Do something</a>
+            <div class="card-body p-3">
+              <h5 class="card-title my-2 mx-0">Order posts</h5>
+              <div class="list-group list-group-flush">
+                <form method="GET" action="#" th:action="@{/order}">
+                  <label for="orderBySelect">By</label>
+                  <select name="orderBy" class="form-control" id="orderBySelect">
+                    <option>id</option>
+                    <option value="content">post content</option>
+                  </select>
+                  <label for="directionSelect">In order</label>
+                  <select name="direction" class="form-control" id="directionSelect">
+                    <option value="asc">ascending</option>
+                    <option value="desc">descending</option>
+                  </select>
+                  <button type="submit" class="btn btn-sm btn-primary mt-4">Sort</button>
+                </form>
+              </div>
             </div>
           </div>
           <!-- user statistics card -->
