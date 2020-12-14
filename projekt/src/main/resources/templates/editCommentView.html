@@ -14,16 +14,8 @@
     <!-- Fonts, icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
-    <style>
-        .h7
-        {
-            font-size: 0.9rem
-        }
-        body
-        {
-            background: lightblue;
-        }
-    </style>
+    <!-- My css -->
+    <link rel="stylesheet" th:href="@{/styles.css}" />
 
 </head>
 <body>
@@ -56,16 +48,25 @@
                     <!-- card body -->
                     <div class="">
                         <div class="">
-                            <p th:text="${comment.commentContent}" class="my-2"></p>
+                            <p th:text="${oldContent}" class="my-2"></p>
                         </div>
-                        <form method="POST" th:object="${editedComment}" th:action="@{/comment/edit/{id}(id = ${comment.id})}">
+                        <form method="POST" th:object="${comment}" th:action="@{'/comment/edit/' + ${comment.id}}">
                             <div class="form-group">
                                 <label class="sr-only" for="postContent">post</label>
                                 <textarea th:field="*{commentContent}" class="form-control" id="postContent" rows="3" placeholder="Edit post content"></textarea>
+                                <span class="myValidationError"
+                                      th:if="${#fields.hasErrors('commentContent')}"
+                                      th:errors="*{commentContent}">Can't add empty comment etc.!</span>
+                                </span>
+                                <input hidden="hidden" th:field="*{username}">
+                                <input hidden="hidden" name="oldContent" th:value="${oldContent}">
                             </div>
                             <div class="text-center my-2">
                                 <button type="submit" class="btn btn-primary">Edit</button>
                             </div>
+                            <span th:if="${#fields.hasErrors()}" class="myValidationError">
+                                Please correct the problems above and resubmit.
+                            </span>
                         </form>
                     </div>
                     <hr class="my-1">

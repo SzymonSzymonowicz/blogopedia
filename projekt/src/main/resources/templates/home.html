@@ -14,26 +14,15 @@
   <!-- Fonts, icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
-  <style>
-    .h7
-    {
-      font-size: 0.9rem
-    }
-    body
-    {
-      background: lightblue;
-    }
-    span.myValidationError {
-      color: red;
-    }
-  </style>
+  <!-- My css -->
+  <link rel="stylesheet" th:href="@{/styles.css}" />
 
 </head>
 <body>
 
     <div class="container-fluid my-5">
       <div class="row">
-        <div class="col-3">
+        <div class="col-3 sticky-top" style="height: 100%; top: 3em">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Left navbar</h5>
@@ -95,7 +84,7 @@
           <!--- Post Form Ends -->
 
           <!-- Post Begins -->
-          <section th:each="post : ${posts}" class="card mt-4">
+          <section th:each="post : ${posts}" class="card mt-4" style="z-index: 1050">
             <div class="border p-2">
               <!-- post header -->
               <div class="row m-0">
@@ -172,7 +161,7 @@
                               th:errors="*{commentContent}">Can't add empty comment!</span>
                         </span>
                         <span th:if="${#fields.hasErrors()}" class="myValidationError">
-                          Please correct the problems and resubmit.
+                          Please correct the problems above and resubmit.
                         </span>
                       </form>
                     </section>
@@ -225,7 +214,7 @@
           <!-- Post Ends -->
         </div>
         <!-- Right nabar -->
-        <div class="col-3">
+        <div class="col-3 sticky-top" style="height: 100%; top: 3em">
           <div class="card">
             <div class="card-body p-3">
               <h5 class="card-title my-2 mx-0">Search</h5>

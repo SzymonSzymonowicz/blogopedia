@@ -23,6 +23,6 @@ public class Comment {
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     @NotEmpty(message = "Comment content can't be empty!")
-    @Size(min = 2, max = 300, message = "Comment content must be longer than 2 characters and shorter than 300")
+    @Size(min = 16, max = 300, message = "Comment content must be longer than 16 characters and shorter than 300")
     private String commentContent;
 }

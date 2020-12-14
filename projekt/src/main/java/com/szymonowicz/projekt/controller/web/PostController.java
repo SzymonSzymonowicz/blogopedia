@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
@@ -53,7 +56,6 @@ public class PostController {
           return "home";
 
         if(errors.hasErrors()){
-            //System.out.println(errors);
             model.addAttribute("posts", postService.getAllPosts());
             model.addAttribute("authors", authorService.getAllAuthors());
             model.addAttribute("comment", new Comment());
@@ -61,13 +63,13 @@ public class PostController {
             return "home";
         }
 
-        Set<Author> authors = new HashSet<Author>();
+        Set<Author> authors = new HashSet<>();
         authors.add(author.get());
 
         Post post = new Post();
         post.setPostContent(postDTO.getPostContent());
         post.setTags(postDTO.getTags());
-        post.setComments(new ArrayList<Comment>());
+        post.setComments(new ArrayList<>());
         post.setAuthors(authors);
 
         postService.addPost(post);
@@ -86,7 +88,7 @@ public class PostController {
     public String editPostView(@PathVariable(name = "postId") long postId, Model model){
         Optional<Post> postOptional = postService.getPost(postId);
 
-        if(!postOptional.isPresent())
+        if(postOptional.isEmpty())
             return "redirect:/";
 
         Post post = postOptional.get();
@@ -103,12 +105,29 @@ public class PostController {
     }
 
     @PostMapping("/post/edit/{postId}")
-    public String editPost(@PathVariable(name = "postId") long postId, PostDTO updatedPostDTO){
+    public String editPost(
+            @PathVariable(name = "postId") long postId,
+            @ModelAttribute("postDTO") @Valid PostDTO updatedPostDTO,
+            Errors errors,
+            @ModelAttribute("post") Post post,
+            Model model
+            ){
+
+        if(errors.hasErrors()){
+            model.addAttribute("post", post);
+            model.addAttribute("postDTO", updatedPostDTO);
+            model.addAttribute("authors", authorService.getAllAuthors());
+
+            return "editPostView";
+        }
+
         Optional<Author> authorOptional = authorService.getAuthorById(updatedPostDTO.getAuthorId());
 
         if(!authorOptional.isPresent()) {
             System.out.println("There isn't any user of id --> " + updatedPostDTO.getAuthorId() + " <--");
+            return "redirect:/";
         }
+
         Author author = authorOptional.get();
 
         postService.editPost(author, postId, updatedPostDTO);

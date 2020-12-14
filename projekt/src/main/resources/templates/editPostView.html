@@ -14,16 +14,8 @@
     <!-- Fonts, icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
-    <style>
-        .h7
-        {
-            font-size: 0.9rem
-        }
-        body
-        {
-            background: lightblue;
-        }
-    </style>
+    <!-- My css -->
+    <link rel="stylesheet" th:href="@{/styles.css}" />
 
 </head>
 <body>
@@ -42,21 +34,6 @@
                         <div class="display-4 text-center">
                             Edit post
                         </div>
-                        <div class="">
-                            <a class="text-decoration-none" href="#">
-                                <img class="" src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png" width="50" height="50" alt="...">
-                            </a>
-                        </div>
-                        <div class="flex-grow-1 pl-2">
-                            <a class="text-decoration-none" href="#">
-                                <h2 class="text-capitalize h5 mb-0" th:each="author: ${post.authors}">
-                                    <span th:text="${author.username}"/>
-                                </h2>
-                            </a>
-                            <ul class="list-inline small text-secondary m-0 mt-1"  >
-                                <li class="list-inline-item small text-secondary m-0 mt-1" th:each="tag: ${#strings.arraySplit(post.getTags(), ' ')}" th:text="${'#' + tag + ' '}" />
-                            </ul>
-                        </div>
                     </div>
                     <!-- card body -->
                     <div class="">
@@ -64,10 +41,18 @@
                             <div class="form-group">
                                 <label class="sr-only" for="postContent">post</label>
                                 <textarea th:field="*{postContent}" class="form-control" id="postContent" rows="3" placeholder="Edit post content"></textarea>
+                                <span class="myValidationError"
+                                      th:if="${#fields.hasErrors('postContent')}"
+                                      th:errors="*{postContent}">Post's content can't be empty etc.!</span>
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="postTags">tags</label>
                                 <textarea th:field="*{tags}" class="form-control" id="postTags" rows="1" placeholder="Edit tags"></textarea>
+                                <span class="myValidationError"
+                                      th:if="${#fields.hasErrors('tags')}"
+                                      th:errors="*{tags}">Post's tags can't be empty etc.!</span>
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label for="postAuthor">Who are you?</label>
@@ -78,6 +63,9 @@
                             <div class="text-center my-2">
                                 <button type="submit" class="btn btn-primary">Edit</button>
                             </div>
+                            <span th:if="${#fields.hasErrors()}" class="myValidationError">
+                                Please correct the problems above and resubmit.
+                            </span>
                         </form>
                     </div>
                     <hr class="my-1">

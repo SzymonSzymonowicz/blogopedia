@@ -2,7 +2,6 @@ package com.szymonowicz.projekt.controller.web;
 
 import com.szymonowicz.projekt.dto.PostDTO;
 import com.szymonowicz.projekt.model.Comment;
-import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.service.AuthorService;
 import com.szymonowicz.projekt.service.CommentService;
 import com.szymonowicz.projekt.service.PostService;
@@ -67,19 +66,30 @@ public class CommentController {
 
         Comment comment = commentOptional.get();
 
-        Comment editedComment = new Comment();
-        editedComment.setCommentContent(comment.getCommentContent());
-        editedComment.setUsername(comment.getUsername());
+        String oldContent = comment.getCommentContent();
 
+        model.addAttribute("oldContent", oldContent);
         model.addAttribute("comment", comment);
-        model.addAttribute("editedComment", editedComment);
 
         return "editCommentView";
     }
 
     @PostMapping("/comment/edit/{id}")
-    public String editPost(@PathVariable(name = "id") long commentId, Comment updatedComment){
-        commentService.editComment(commentId, updatedComment);
+    public String editPost(
+            @PathVariable(name = "id") long commentId,
+            @ModelAttribute("comment") @Valid Comment editedComment,
+            Errors errors,
+            @ModelAttribute("oldContent") String oldContent,
+            Model model){
+
+        if(errors.hasErrors()){
+            model.addAttribute("comment", editedComment);
+            model.addAttribute("oldContent", oldContent);
+
+            return "editCommentView";
+        }
+
+        commentService.editComment(commentId, editedComment);
 
         return "redirect:/";
     }
