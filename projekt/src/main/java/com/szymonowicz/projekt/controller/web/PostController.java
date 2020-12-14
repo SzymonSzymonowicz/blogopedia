@@ -10,7 +10,9 @@ import com.szymonowicz.projekt.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,12 +45,21 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public String addPost(PostDTO postDTO){
+    public String addPost(@Valid @ModelAttribute("postDTO") PostDTO postDTO, Errors errors, Model model){
         Optional<Author> author = authorService.getAuthorById(postDTO.getAuthorId());
 
         if(!author.isPresent())
           // TODO maybe handiling author not found, realistically it will not ever occur, because author is selected from select of authors from database
-          return "redirect:/";
+          return "home";
+
+        if(errors.hasErrors()){
+            //System.out.println(errors);
+            model.addAttribute("posts", postService.getAllPosts());
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("comment", new Comment());
+
+            return "home";
+        }
 
         Set<Author> authors = new HashSet<Author>();
         authors.add(author.get());
