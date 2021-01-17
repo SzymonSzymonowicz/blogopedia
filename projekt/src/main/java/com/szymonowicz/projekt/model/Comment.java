@@ -18,11 +18,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String username;
+//    private String username;
+
+    @ManyToOne//(fetch = FetchType.LAZY)
+    private Author author;
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @NotEmpty(message = "Comment content can't be empty!")
-    @Size(min = 16, max = 300, message = "Comment content must be longer than 16 characters and shorter than 300")
     private String commentContent;
 }

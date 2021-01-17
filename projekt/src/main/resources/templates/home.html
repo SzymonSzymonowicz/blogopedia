@@ -128,7 +128,7 @@
                     </h2>
                   </a>
                   <ul class="list-inline small text-secondary m-0 mt-1"  >
-                    <li class="list-inline-item small text-secondary m-0 mt-1" th:each="tag: ${#strings.arraySplit(post.getTags(), ' ')}" th:text="${'#' + tag + ' '}" />
+                    <li class="list-inline-item small text-secondary m-0 mt-1" th:each="tag: ${post.tags}" th:text="${'#' + tag.tagName + ' '}" />
                   </ul>
                 </div>
 
@@ -177,7 +177,7 @@
                   <div class="card border border-right-0 border-left-0 border-bottom-0 mt-1">
                     <!-- new comment form -->
                     <section class="mt-3 mx-2">
-                      <form th:object="${comment}" method="POST" th:action="@{/comment/{id}(id = ${post.id})}">
+                      <form th:object="${commentDTO}" method="POST" th:action="@{/comment/{id}(id = ${post.id})}">
                         <div class="form-group">
                           <label for="commentAuthor">Who are you?</label>
                           <select th:field="*{username}" class="form-control" id="commentAuthor">
@@ -201,7 +201,7 @@
                     </section>
                     <!-- comment card bgins -->
                     <section>
-                      <div th:each="comment: ${post.getComments()}" class="card p-2 mt-3 mx-2">
+                      <div th:each="singleComment: ${post.getComments()}" class="card p-2 mt-3 mx-2">
                         <!-- comment header -->
                         <div class="d-flex">
                           <div class="">
@@ -210,7 +210,7 @@
                             </a>
                           </div>
                           <div class="flex-grow-1 pl-2">
-                            <a th:text="${comment.getUsername()}" class="text-decoration-none text-capitalize h6 m-0" href="#"></a>
+                            <a th:text="${singleComment.author.username}" class="text-decoration-none text-capitalize h6 m-0" href="#"></a>
                           </div>
                           <div >
                             <div class="dropdown">
@@ -219,10 +219,10 @@
                               </a>
 
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <form method="get" th:action="@{/comment/edit/{id}(id = ${comment.id})}">
+                                <form method="get" th:action="@{/comment/edit/{id}(id = ${singleComment.id})}">
                                   <button type="submit" class="dropdown-item text-primary" >Edit</button>
                                 </form>
-                                <form method="get" th:action="@{/comment/delete/{id}(id = ${comment.id})}">
+                                <form method="get" th:action="@{/comment/delete/{id}(id = ${singleComment.id})}">
                                   <button type="submit" class="dropdown-item text-primary" >Delete</button>
                                 </form>
                               </div>
@@ -232,7 +232,7 @@
                         <!-- comment header -->
                         <!-- comment body -->
                         <div class="card-body p-0">
-                          <p th:text="${comment.getCommentContent()}" class="card-text h7 mb-1"></p>
+                          <p th:text="${singleComment.commentContent}" class="card-text h7 mb-1"></p>
                         </div>
                       </div>
                     </section>

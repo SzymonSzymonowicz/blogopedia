@@ -1,27 +1,23 @@
 package com.szymonowicz.projekt.service;
 
 import com.szymonowicz.projekt.dto.PostDTO;
-import com.szymonowicz.projekt.model.Attachment;
-import com.szymonowicz.projekt.model.Author;
-import com.szymonowicz.projekt.model.Comment;
-import com.szymonowicz.projekt.model.Post;
+import com.szymonowicz.projekt.model.*;
 import com.szymonowicz.projekt.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class PostService {
     private final PostRepository postRepository;
+    private TagService tagService;
 
-    public PostService(PostRepository postRepository){
+    public PostService(PostRepository postRepository,TagService tagService){
         this.postRepository = postRepository;
+        this.tagService = tagService;
     }
 
     public void addPost(Post post){
@@ -97,8 +93,10 @@ public class PostService {
         if(!postFromDb.getAuthors().contains(author))
             postFromDb.getAuthors().add(author);
 
+        Set<Tag> tagsFromString = tagService.getTagsFromString(updatedPostDTO.getTags());
+
         postFromDb.setPostContent(updatedPostDTO.getPostContent());
-        postFromDb.setTags(updatedPostDTO.getTags());
+        postFromDb.setTags(tagsFromString);
 
         postRepository.save(postFromDb);
     }
@@ -114,7 +112,7 @@ public class PostService {
                 result.add(byId.get());
         }else if(by.equals("tag")){
             for(Post post : allPosts) {
-                if(Arrays.stream(post.getTags().split(" ")).anyMatch(tag -> tag.equalsIgnoreCase(value))){
+                if(post.getTags().stream().anyMatch(tag -> tag.getTagName().equalsIgnoreCase(value))){
                     result.add(post);
                 }
             }
@@ -168,5 +166,17 @@ public class PostService {
         post.getAttachments().add(attachment);
 
         postRepository.save(post);
+    }
+
+    public String getTagsAsString(Post post){
+        if(post == null)
+            return null;
+
+        String tagsStr = post.getTags().stream()
+                .map(tag -> tag.getTagName())
+                .reduce((a, b) -> a + " " + b)
+                .get();
+
+        return tagsStr;
     }
 }

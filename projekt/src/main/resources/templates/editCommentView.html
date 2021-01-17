@@ -45,7 +45,7 @@
             </div>
             <div class="flex-grow-1 pl-2">
               <a class="text-decoration-none" href="#">
-                <h2 class="text-capitalize h5 mb-0" th:text="${comment.username}"/>
+                <h2 class="text-capitalize h5 mb-0" th:text="${comment.author.username}"/>
               </a>
             </div>
           </div>
@@ -63,7 +63,8 @@
                       th:if="${#fields.hasErrors('commentContent')}"
                       th:errors="*{commentContent}">Can't add empty comment etc.!</span>
                 </span>
-                <input hidden="hidden" th:field="*{username}">
+                <input hidden="hidden" th:field="*{author}">
+                <input hidden="hidden" th:field="*{id}">
                 <input hidden="hidden" name="oldContent" th:value="${oldContent}">
               </div>
               <div class="text-center my-2">

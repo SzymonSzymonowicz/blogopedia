@@ -1,5 +1,6 @@
 package com.szymonowicz.projekt.controller.web;
 
+import com.szymonowicz.projekt.dto.CommentDTO;
 import com.szymonowicz.projekt.model.Author;
 import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.model.Post;
@@ -38,7 +39,7 @@ public class SearchController {
         List<Author> authors = authorService.getAllAuthors();
 
         model.addAttribute("posts", posts);
-        model.addAttribute("comment", new Comment());
+        model.addAttribute("commentDTO", new CommentDTO());
         model.addAttribute("authors", authors);
 
         model.addAttribute("by", by);

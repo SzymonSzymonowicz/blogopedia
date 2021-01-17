@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,8 +22,7 @@ public class Author {
     private String username;
 
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "authors")
-    private Set<Post> posts = new HashSet<>();
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    private List<Comment> comments = new ArrayList<>();
 }

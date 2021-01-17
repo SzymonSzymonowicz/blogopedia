@@ -65,7 +65,7 @@
             </a>
           </div>
           <div class="flex-grow-1 pl-2">
-            <a th:text="${comment.getUsername()}" class="text-decoration-none text-capitalize h6 m-0" href="#"></a>
+            <a th:text="${comment.author.username}" class="text-decoration-none text-capitalize h6 m-0" href="#"></a>
           </div>
           <div >
             <div class="dropdown">
@@ -87,7 +87,7 @@
         <!-- comment header -->
         <!-- comment body -->
         <div class="card-body p-0">
-          <p th:text="${comment.getCommentContent()}" class="card-text h7 mb-1"></p>
+          <p th:text="${comment.commentContent}" class="card-text h7 mb-1"></p>
         </div>
     </section>
     <!-- card ends -->

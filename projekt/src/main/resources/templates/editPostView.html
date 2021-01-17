@@ -39,7 +39,7 @@
           </div>
           <!-- card body -->
           <div class="">
-            <form method="POST" th:object="${postDTO}" th:action="@{/post/edit/{postId}(postId = ${post.id})}">
+            <form method="POST" th:object="${postDTO}" th:action="@{/post/edit/{postId}(postId = ${postId})}">
               <div class="form-group">
                 <label class="sr-only" for="postContent">post</label>
                 <textarea th:field="*{postContent}" class="form-control" id="postContent" rows="3"

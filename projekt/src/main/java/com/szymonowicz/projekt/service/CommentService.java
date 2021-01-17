@@ -42,7 +42,7 @@ public class CommentService {
         int sum = 0;
 
         for (Comment comment : comments) {
-            if(username.equals(comment.getUsername()))
+            if(username.equals(comment.getAuthor().getUsername()))
                 sum++;
         }
 
@@ -60,7 +60,7 @@ public class CommentService {
         Comment commentFromDb = commentOptional.get();
 
         commentFromDb.setCommentContent(updatedComment.getCommentContent());
-
+        log.info("Changing comment id ---> " + commentFromDb.getId());
         commentRepository.save(commentFromDb);
     }
 
@@ -69,7 +69,7 @@ public class CommentService {
         List<Comment> result = new ArrayList<>();
 
         for (Comment comment : comments) {
-            if(username.equalsIgnoreCase(comment.getUsername()))
+            if(username.equalsIgnoreCase(comment.getAuthor().getUsername()))
                 result.add(comment);
         }
 

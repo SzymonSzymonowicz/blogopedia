@@ -1,6 +1,7 @@
 package com.szymonowicz.projekt.service;
 
 import com.szymonowicz.projekt.model.Author;
+import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,12 @@ public class AuthorService {
         return authorRepository.findById(id);
     }
 
+    public Optional<Author> getAuthorByUsername(String username) {
+        return authorRepository.findByUsername(username);
+    }
+
+    public void addComment(Author author, Comment saveComment) {
+        author.getComments().add(saveComment);
+        authorRepository.save(author);
+    }
 }

@@ -25,7 +25,17 @@ public class Post {
     @Type(type = "org.hibernate.type.TextType")
     private String postContent;
 
-    private String tags;
+//    private String tags;
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.MERGE,
+            CascadeType.PERSIST
+    })
+    @JoinTable(name = "post_tag",
+            joinColumns = { @JoinColumn(name = "post_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id")}
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     @ToString.Exclude
     @OneToMany(targetEntity = Attachment.class, cascade = CascadeType.ALL)
