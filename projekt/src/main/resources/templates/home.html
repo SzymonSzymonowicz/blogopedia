@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       lang="en">
 <head>
   <title>Blogopedia</title>
@@ -23,8 +24,24 @@
     <div class="container-fluid my-5">
       <div class="row">
         <div class="col-3 sticky-top" style="height: 100%; top: 3em">
-          <!-- order posts card -->
+          <!-- login card -->
           <div class="card">
+            <div class="card-body p-3">
+              <h5 class="card-title my-2 mx-0 text-center">Login</h5>
+              <div class="list-group list-group-flush">
+                <div sec:authorize="isAuthenticated()">
+                  Welcome <b><span sec:authentication="name">Username</span></b>!
+                  &nbsp;
+                  <i><span sec:authentication="principal.authorities">Roles</span></i>
+                </div>
+                <a sec:authorize="isAnonymous()" class="btn btn-sm btn-success mt-4" href="/login">Login</a>
+                <a sec:authorize="isAuthenticated()" class="btn btn-sm btn-danger mt-4" href="/logout">Logout</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- order posts card -->
+          <div class="card mt-4">
             <div class="card-body p-3">
               <h5 class="card-title my-2 mx-0">Order posts</h5>
               <div class="list-group list-group-flush">
@@ -63,6 +80,7 @@
         <div class="col-6">
 
           <!--- post form begins -->
+          <div sec:authorize="isAuthenticated()">
           <section class="card">
             <div class="card-header">
               <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
@@ -109,6 +127,7 @@
               </form>
             </div>
           </section>
+          </div>
           <!--- post form ends -->
 
           <!-- post begins -->
@@ -132,7 +151,7 @@
                   </ul>
                 </div>
 
-                <div class="dropdown">
+                <div sec:authorize="isAuthenticated()" class="dropdown">
                   <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-chevron-down"></i>
                   </a>
@@ -145,7 +164,9 @@
                       <button type="submit" class="dropdown-item text-primary" >Edit</button>
                     </form>
                     <form method="get" th:action="@{/post/delete/{id}(id = ${post.id})}">
-                      <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                      <div sec:authorize="hasAnyAuthority('ADMIN')">
+                        <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                      </div>
                     </form>
                   </div>
                 </div>
