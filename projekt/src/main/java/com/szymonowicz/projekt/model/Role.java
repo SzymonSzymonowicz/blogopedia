@@ -8,12 +8,13 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name="attachment")
-public class Attachment {
+@AllArgsConstructor
+@Table(name="role")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String fileName;
+
+    private String roleName;
 }

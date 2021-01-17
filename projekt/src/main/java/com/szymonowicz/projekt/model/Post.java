@@ -16,6 +16,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name="post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

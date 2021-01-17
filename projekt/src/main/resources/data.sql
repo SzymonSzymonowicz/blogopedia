@@ -1,6 +1,59 @@
--- INSERT INTO author (ID, FIRST_NAME, LAST_NAME, USERNAME)
--- SELECT *
---   FROM CSVREAD( 'classpath:authors.csv', NULL )
+-- roles inserts
+INSERT INTO role(role_name) VALUES ('ADMIN');
+INSERT INTO role(role_name) VALUES ('USER');
+INSERT INTO role(role_name) VALUES ('ANONYMOUS');
+
+
+-- author inserts
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (1,'Thomasa','Rignold','trignold0','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (2,'Ilysa','MacCroary','imaccroary1','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (3,'Aleksandr','Dike','adike2','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (4,'Rollins','Dearell','rdearell3','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (5,'Vinnie','Valentine','vvalentine4','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (6,'Hesther','Alchin','halchin5','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (7,'Raleigh','Degue','rdegue6','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (8,'Olav','Mulqueeny','omulqueeny7','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (9,'Em','Maciunas','emaciunas8','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (10,'Thor','Quelch','tquelch9','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (11,'Anatol','Van Halle','avanhallea','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (12,'Ives','Riepl','irieplb','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (13,'Tori','Kineton','tkinetonc','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (14,'Vannie','Grzelczak','vgrzelczakd','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (15,'Erik','Pales','epalese','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (16,'Boyd','Zorzi','bzorzif','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (17,'Mike','Anyene','manyeneg','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (18,'Elie','Shoosmith','eshoosmithh','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (19,'Amara','Andreazzi','aandreazzii','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (20,'Ramon','Farran','rfarranj','$2a$10$Sc4YCPspSMIK8bhq8KtLIeTbaydz.TuoSW3i3qypTr8d5W8A1M8IK');
+
+
+INSERT INTO author(id,first_name,last_name,username,password) VALUES (21,'Barry','Allen','admin','$2a$10$6fm1lNkOd0fYMgotyFAKyOI78yRtQi8yQIS6/dNFH3j/aePXM4AL2');
+
+-- author_role inserts
+INSERT INTO author_role(author_id,role_id) VALUES (21, 1);
+INSERT INTO author_role(author_id,role_id) VALUES (21, 2);
+
+INSERT INTO author_role(author_id,role_id) VALUES (1, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (2, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (3, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (4, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (5, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (6, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (7, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (8, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (9, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (10, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (11, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (12, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (13, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (14, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (15, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (16, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (17, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (18, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (19, 2);
+INSERT INTO author_role(author_id,role_id) VALUES (20, 2);
+
 
 -- tags inserts
 INSERT INTO tag(id,tag_name) VALUES (1,'test');
@@ -24,31 +77,9 @@ INSERT INTO tag(id,tag_name) VALUES (18,'bucks');
 INSERT INTO tag(id,tag_name) VALUES (19,'giannis');
 INSERT INTO tag(id,tag_name) VALUES (20,'shaq');
 
--- author inserts
-INSERT INTO author(id,first_name,last_name,username) VALUES (1,'Thomasa','Rignold','trignold0');
-INSERT INTO author(id,first_name,last_name,username) VALUES (2,'Ilysa','MacCroary','imaccroary1');
-INSERT INTO author(id,first_name,last_name,username) VALUES (3,'Aleksandr','Dike','adike2');
-INSERT INTO author(id,first_name,last_name,username) VALUES (4,'Rollins','Dearell','rdearell3');
-INSERT INTO author(id,first_name,last_name,username) VALUES (5,'Vinnie','Valentine','vvalentine4');
-INSERT INTO author(id,first_name,last_name,username) VALUES (6,'Hesther','Alchin','halchin5');
-INSERT INTO author(id,first_name,last_name,username) VALUES (7,'Raleigh','Degue','rdegue6');
-INSERT INTO author(id,first_name,last_name,username) VALUES (8,'Olav','Mulqueeny','omulqueeny7');
-INSERT INTO author(id,first_name,last_name,username) VALUES (9,'Em','Maciunas','emaciunas8');
-INSERT INTO author(id,first_name,last_name,username) VALUES (10,'Thor','Quelch','tquelch9');
-INSERT INTO author(id,first_name,last_name,username) VALUES (11,'Anatol','Van Halle','avanhallea');
-INSERT INTO author(id,first_name,last_name,username) VALUES (12,'Ives','Riepl','irieplb');
-INSERT INTO author(id,first_name,last_name,username) VALUES (13,'Tori','Kineton','tkinetonc');
-INSERT INTO author(id,first_name,last_name,username) VALUES (14,'Vannie','Grzelczak','vgrzelczakd');
-INSERT INTO author(id,first_name,last_name,username) VALUES (15,'Erik','Pales','epalese');
-INSERT INTO author(id,first_name,last_name,username) VALUES (16,'Boyd','Zorzi','bzorzif');
-INSERT INTO author(id,first_name,last_name,username) VALUES (17,'Mike','Anyene','manyeneg');
-INSERT INTO author(id,first_name,last_name,username) VALUES (18,'Elie','Shoosmith','eshoosmithh');
-INSERT INTO author(id,first_name,last_name,username) VALUES (19,'Amara','Andreazzi','aandreazzii');
-INSERT INTO author(id,first_name,last_name,username) VALUES (20,'Ramon','Farran','rfarranj');
+
 
 -- post inserts
-
-
 INSERT INTO post(id,post_content) VALUES (1,'<img src="https://imagazine.pl/wp-content/uploads/2014/12/javaprob-001.png">');
 INSERT INTO post(id,post_content) VALUES (2,'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem.');
 INSERT INTO post(id,post_content) VALUES (3,'Aenean lectus. Pellentesque eget nunc.');

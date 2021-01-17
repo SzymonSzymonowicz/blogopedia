@@ -3,7 +3,6 @@ package com.szymonowicz.projekt.controller.web;
 import com.szymonowicz.projekt.dto.CommentDTO;
 import com.szymonowicz.projekt.dto.PostDTO;
 import com.szymonowicz.projekt.model.Author;
-import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.model.Tag;
 import com.szymonowicz.projekt.service.AuthorService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class PostController {
