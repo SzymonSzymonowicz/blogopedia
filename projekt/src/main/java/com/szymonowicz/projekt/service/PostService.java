@@ -114,19 +114,19 @@ public class PostService {
                 result.add(byId.get());
         }else if(by.equals("tag")){
             for(Post post : allPosts) {
-                if(Arrays.stream(post.getTags().split(" ")).anyMatch(tag -> tag.equals(value))){
+                if(Arrays.stream(post.getTags().split(" ")).anyMatch(tag -> tag.equalsIgnoreCase(value))){
                     result.add(post);
                 }
             }
         }else if(by.equals("author")){
             for(Post post: allPosts){
-                if(post.getAuthors().stream().anyMatch(author -> author.getUsername().equals(value))){
+                if(post.getAuthors().stream().anyMatch(author -> author.getUsername().equalsIgnoreCase(value))){
                     result.add(post);
                 }
             }
         }else if(by.equals("content")){
             for(Post post: allPosts){
-                if(Arrays.stream(post.getPostContent().split("\\W+")).anyMatch(word -> word.equals(value))){
+                if(Arrays.stream(post.getPostContent().split("\\W+")).anyMatch(word -> word.equalsIgnoreCase(value))){
                     result.add(post);
                 }
             }

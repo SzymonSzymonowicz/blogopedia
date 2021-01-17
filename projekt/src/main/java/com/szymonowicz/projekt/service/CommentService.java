@@ -69,7 +69,7 @@ public class CommentService {
         List<Comment> result = new ArrayList<>();
 
         for (Comment comment : comments) {
-            if(username.equals(comment.getUsername()))
+            if(username.equalsIgnoreCase(comment.getUsername()))
                 result.add(comment);
         }
 

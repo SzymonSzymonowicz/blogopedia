@@ -93,7 +93,7 @@
           </div>
           <!-- post body -->
           <div class="">
-            <p th:text="${post.postContent}" class="my-2"></p>
+            <p th:utext="${post.postContent}" class="my-2"></p>
             <p class="my-0"th:each="attachment: ${post.attachments}">
               <a th:href="@{${'/files/' + attachment.fileName}}" th:text="${attachment.fileName}"/>
             </p>
