@@ -35,6 +35,7 @@
                   <i><span sec:authentication="principal.authorities">Roles</span></i>
                 </div>
                 <a sec:authorize="isAnonymous()" class="btn btn-sm btn-success mt-4" href="/login">Login</a>
+                <a sec:authorize="isAnonymous()" class="btn btn-sm btn-primary mt-4" href="/registration">Register</a>
                 <a sec:authorize="isAuthenticated()" class="btn btn-sm btn-danger mt-4" href="/logout">Logout</a>
                 <a sec:authorize="isAuthenticated()" class="btn btn-sm btn-warning mt-4" href="/">Homepage</a>
               </div>
