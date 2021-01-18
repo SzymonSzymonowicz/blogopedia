@@ -5,6 +5,7 @@ import com.szymonowicz.projekt.dto.PostDTO;
 import com.szymonowicz.projekt.model.Author;
 import com.szymonowicz.projekt.model.Comment;
 import com.szymonowicz.projekt.service.AuthorService;
+import com.szymonowicz.projekt.service.AuthoritiesService;
 import com.szymonowicz.projekt.service.CommentService;
 import com.szymonowicz.projekt.service.PostService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,12 +28,15 @@ public class CommentController {
     private PostService postService;
     private CommentService commentService;
     private AuthorService authorService;
+    private AuthoritiesService authoritiesService;
 
     @Autowired
-    public CommentController(PostService postService, AuthorService authorService, CommentService commentService) {
+    public CommentController(PostService postService, AuthorService authorService,
+                             CommentService commentService, AuthoritiesService authoritiesService) {
         this.postService = postService;
         this.authorService = authorService;
         this.commentService = commentService;
+        this.authoritiesService = authoritiesService;
     }
 
     @GetMapping("/comment/delete/{id}")
@@ -53,11 +57,11 @@ public class CommentController {
             return "home";
         }
 
-        Optional<Author> authorOptional = authorService.getAuthorByUsername(commentDTO.getUsername());
+        Optional<Author> authorOptional = authorService.getAuthorByUsername(authoritiesService.getUsername());
 
         if(authorOptional.isEmpty()) {
             //TODO register if author doesnt exist
-            log.error("Author of username -> " + commentDTO.getUsername() + " <- DOES NOT EXIST!");
+            log.error("Author of username -> " + authoritiesService.getUsername() + " <- DOES NOT EXIST!");
             return "redirect:/";
         }
 

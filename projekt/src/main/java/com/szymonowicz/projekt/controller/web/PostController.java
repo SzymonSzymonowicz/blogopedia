@@ -2,7 +2,6 @@ package com.szymonowicz.projekt.controller.web;
 
 import com.szymonowicz.projekt.dto.CommentDTO;
 import com.szymonowicz.projekt.dto.PostDTO;
-import com.szymonowicz.projekt.enums.PrivacyType;
 import com.szymonowicz.projekt.model.Author;
 import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.model.Tag;
@@ -11,9 +10,6 @@ import com.szymonowicz.projekt.service.AuthoritiesService;
 import com.szymonowicz.projekt.service.PostService;
 import com.szymonowicz.projekt.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class PostController {
@@ -29,12 +24,15 @@ public class PostController {
     private PostService postService;
     private AuthorService authorService;
     private TagService tagService;
+    private AuthoritiesService authoritiesService;
 
     @Autowired
-    public PostController(PostService postService, AuthorService authorService, TagService tagService) {
+    public PostController(PostService postService, AuthorService authorService,
+                          TagService tagService, AuthoritiesService authoritiesService) {
         this.postService = postService;
         this.authorService = authorService;
         this.tagService = tagService;
+        this.authoritiesService = authoritiesService;
     }
 
     @GetMapping("/")
@@ -65,10 +63,10 @@ public class PostController {
 
     @PostMapping("/post")
     public String addPost(@Valid @ModelAttribute("postDTO") PostDTO postDTO, Errors errors, Model model){
-        Optional<Author> author = authorService.getAuthorById(postDTO.getAuthorId());
+        Optional<Author> author = authorService.getAuthorByUsername(authoritiesService.getUsername());
 
         if(!author.isPresent())
-            // as authorId is taken from select of all Authors, it should never occur, nevertheless just for being sure
+            // as author's username is taken from login credentials it should never occur
             return "home";
 
         if(errors.hasErrors()){
@@ -141,10 +139,10 @@ public class PostController {
             return "editPostView";
         }
 
-        Optional<Author> authorOptional = authorService.getAuthorById(updatedPostDTO.getAuthorId());
+        Optional<Author> authorOptional = authorService.getAuthorByUsername(authoritiesService.getUsername());
 
         if(!authorOptional.isPresent()) {
-            System.out.println("There isn't any user of id --> " + updatedPostDTO.getAuthorId() + " <--");
+            System.out.println("There isn't any user with username --> " + authoritiesService.getUsername() + " <--");
             return "redirect:/";
         }
 

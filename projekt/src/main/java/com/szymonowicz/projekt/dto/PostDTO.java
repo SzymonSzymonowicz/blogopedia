@@ -2,18 +2,13 @@ package com.szymonowicz.projekt.dto;
 
 import com.szymonowicz.projekt.enums.PrivacyType;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
@@ -25,8 +20,5 @@ public class PostDTO {
     @Size(min = 3, max = 100, message = "Post tags must be longer than 3 characters and shorter than 100")
     private String tags;
 
-    private long authorId;
-
-    //@Enumerated(EnumType.STRING)
     private PrivacyType privacyType;
 }

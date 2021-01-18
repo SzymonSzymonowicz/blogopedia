@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       lang="en">
 <head>
   <title>Blogopedia</title>
@@ -122,14 +123,8 @@
             <div class="collapse" th:id="${'collapse_' + post.getId()}">
               <div class="card border border-right-0 border-left-0 border-bottom-0 mt-1">
                 <!-- new comment form -->
-                <section class="mt-3 mx-2">
+                <section sec:authorize="isAuthenticated()" class="mt-3 mx-2">
                   <form th:object="${commentDTO}" method="POST" th:action="@{/comment/{id}(id = ${post.id})}">
-                    <div class="form-group">
-                      <label for="commentAuthor">Who are you?</label>
-                      <select th:field="*{username}" class="form-control" id="commentAuthor">
-                        <option th:each="author: ${authors}" th:attr="value = ${author.username}" th:text="${author.username}"></option>
-                      </select>
-                    </div>
                     <div class="input-group input-group mt-2">
                       <input th:field="*{commentContent}" type="text" class="form-control" placeholder="Write Comment" aria-label="Recipient's username" aria-describedby="basic-addon2">
                       <div class="input-group-append">
