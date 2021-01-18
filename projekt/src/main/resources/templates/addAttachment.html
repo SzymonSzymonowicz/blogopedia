@@ -44,7 +44,7 @@
             <div class="">
               <ul class="list-group list-group-horizontal">
                 <li class="list-group-item flex-fill text-center p-0 px-lg-2 border-0">
-                  <a class="small text-decoration-none" th:href="@{'/'}" role="button">
+                  <a class="small text-decoration-none" onclick='javascript:window.history.back()' role="button">
                     Go to homepage
                   </a>
                 </li>
@@ -97,10 +97,10 @@
             <p class="my-0"th:each="attachment: ${post.attachments}">
               <a th:href="@{${'/files/' + attachment.fileName}}" th:text="${attachment.fileName}"/>
             </p>
-            <form method="POST" enctype="multipart/form-data" th:action="@{/upload/{id}(id = ${post.id})}">
+            <form method="POST" enctype="multipart/form-data" th:action="@{/upload/{id}(id = ${post.id})}" >
               <label for="file">File to upload:</label>
                 <input type="file" name="file" id="file" />
-                <input type="submit" value="Upload" />
+                <input type="submit" value="Upload" onclick='javascript:window.history.back()'/>
               </table>
             </form>
           </div>

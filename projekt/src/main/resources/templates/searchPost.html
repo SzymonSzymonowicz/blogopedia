@@ -76,17 +76,22 @@
               </ul>
             </div>
 
-            <div class="dropdown">
+            <div sec:authorize="isAuthenticated()" class="dropdown">
               <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-chevron-down"></i>
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <form method="get" th:action="@{/upload/{id}(id = ${post.id})}">
+                  <button type="submit" class="dropdown-item text-primary" >Attach file</button>
+                </form>
                 <form method="get" th:action="@{/post/edit/{postId}(postId = ${post.id})}">
                   <button type="submit" class="dropdown-item text-primary" >Edit</button>
                 </form>
                 <form method="get" th:action="@{/post/delete/{id}(id = ${post.id})}">
-                  <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                  <div sec:authorize="hasAnyAuthority('ADMIN')">
+                    <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -137,12 +142,12 @@
                     </span>
                     <span th:if="${#fields.hasErrors()}" class="myValidationError">
                           Please correct the problems above and resubmit.
-                    </span>
+                        </span>
                   </form>
                 </section>
-                <!-- comment card begins -->
+                <!-- comment card bgins -->
                 <section>
-                  <div th:each="comment: ${post.getComments()}" class="card p-2 mt-3 mx-2">
+                  <div th:each="singleComment: ${post.getComments()}" class="card p-2 mt-3 mx-2">
                     <!-- comment header -->
                     <div class="d-flex">
                       <div class="">
@@ -151,7 +156,7 @@
                         </a>
                       </div>
                       <div class="flex-grow-1 pl-2">
-                        <a th:text="${comment.author.getUsername()}" class="text-decoration-none text-capitalize h6 m-0" href="#"></a>
+                        <a th:text="${singleComment.author.username}" class="text-decoration-none text-capitalize h6 m-0" href="#"></a>
                       </div>
                       <div >
                         <div class="dropdown">
@@ -160,10 +165,10 @@
                           </a>
 
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <form method="get" th:action="@{/comment/edit/{id}(id = ${comment.id})}">
+                            <form method="get" th:action="@{/comment/edit/{id}(id = ${singleComment.id})}">
                               <button type="submit" class="dropdown-item text-primary" >Edit</button>
                             </form>
-                            <form method="get" th:action="@{/comment/delete/{id}(id = ${comment.id})}">
+                            <form method="get" th:action="@{/comment/delete/{id}(id = ${singleComment.id})}">
                               <button type="submit" class="dropdown-item text-primary" >Delete</button>
                             </form>
                           </div>
@@ -173,7 +178,7 @@
                     <!-- comment header -->
                     <!-- comment body -->
                     <div class="card-body p-0">
-                      <p th:text="${comment.getCommentContent()}" class="card-text h7 mb-1"></p>
+                      <p th:text="${singleComment.commentContent}" class="card-text h7 mb-1"></p>
                     </div>
                   </div>
                 </section>

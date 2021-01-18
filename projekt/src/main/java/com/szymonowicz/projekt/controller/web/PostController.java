@@ -2,13 +2,18 @@ package com.szymonowicz.projekt.controller.web;
 
 import com.szymonowicz.projekt.dto.CommentDTO;
 import com.szymonowicz.projekt.dto.PostDTO;
+import com.szymonowicz.projekt.enums.PrivacyType;
 import com.szymonowicz.projekt.model.Author;
 import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.model.Tag;
 import com.szymonowicz.projekt.service.AuthorService;
+import com.szymonowicz.projekt.service.AuthoritiesService;
 import com.szymonowicz.projekt.service.PostService;
 import com.szymonowicz.projekt.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class PostController {
@@ -33,9 +39,10 @@ public class PostController {
 
     @GetMapping("/")
     public String home(Model model){
-        model.addAttribute("posts", postService.getAllPosts());
-        model.addAttribute("authors", authorService.getAllAuthors());
+        List<Post> postsByUserRole = postService.getPostsByUserRole();
 
+        model.addAttribute("posts", postsByUserRole);
+        model.addAttribute("authors", authorService.getAllAuthors());
         model.addAttribute("postDTO", new PostDTO());
         model.addAttribute("commentDTO", new CommentDTO());
 
@@ -44,9 +51,11 @@ public class PostController {
 
     @GetMapping("/order")
     public String orderPost(@RequestParam String orderBy, @RequestParam String direction, Model model){
-        List<Post> allPosts = postService.getAllPostsOrdered(orderBy, direction);
+        //List<Post> allPosts = postService.getAllPostsOrdered(orderBy, direction);
+        List<Post> postsByUserRole = postService.getPostsByUserRole();
+        List<Post> orderedPosts = postService.orderPosts(postsByUserRole, orderBy, direction);
 
-        model.addAttribute("posts", allPosts);
+        model.addAttribute("posts", orderedPosts);
         model.addAttribute("authors", authorService.getAllAuthors());
         model.addAttribute("postDTO", new PostDTO());
         model.addAttribute("commentDTO", new CommentDTO());
@@ -76,6 +85,7 @@ public class PostController {
         Set<Tag> tagsFromString = tagService.getTagsFromString(postDTO.getTags());
         Post post = new Post();
         post.setPostContent(postDTO.getPostContent());
+        post.setPrivacyType(postDTO.getPrivacyType());
         post.setTags(tagsFromString);
         post.setComments(new ArrayList<>());
         post.setAuthors(authors);

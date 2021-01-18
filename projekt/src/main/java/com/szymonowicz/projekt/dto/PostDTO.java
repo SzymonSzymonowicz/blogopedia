@@ -1,10 +1,13 @@
 package com.szymonowicz.projekt.dto;
 
+import com.szymonowicz.projekt.enums.PrivacyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -23,4 +26,7 @@ public class PostDTO {
     private String tags;
 
     private long authorId;
+
+    //@Enumerated(EnumType.STRING)
+    private PrivacyType privacyType;
 }

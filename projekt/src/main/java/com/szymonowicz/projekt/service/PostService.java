@@ -1,6 +1,7 @@
 package com.szymonowicz.projekt.service;
 
 import com.szymonowicz.projekt.dto.PostDTO;
+import com.szymonowicz.projekt.enums.PrivacyType;
 import com.szymonowicz.projekt.model.*;
 import com.szymonowicz.projekt.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +15,12 @@ import java.util.stream.Collectors;
 public class PostService {
     private final PostRepository postRepository;
     private TagService tagService;
+    private AuthoritiesService authoritiesService;
 
-    public PostService(PostRepository postRepository,TagService tagService){
+    public PostService(PostRepository postRepository,TagService tagService, AuthoritiesService authoritiesService){
         this.postRepository = postRepository;
         this.tagService = tagService;
+        this.authoritiesService = authoritiesService;
     }
 
     public void addPost(Post post){
@@ -65,7 +68,20 @@ public class PostService {
         if(!postOptional.isPresent())
             return;
 
-        postRepository.deleteById(postOptional.get().getId());
+        Post postFromDb = postOptional.get();
+        List<Post> allPosts = postRepository.findAll();
+        Set<Tag> tags = new HashSet<>(postFromDb.getTags());
+
+        postRepository.deleteById(postFromDb.getId());
+
+        // if tag is an orphan delete it
+        for(Tag tag : tags){
+            if(allPosts.stream().noneMatch(post -> post.getId() != postFromDb.getId() &&
+                    post.getTags().stream()
+                            .anyMatch(postTag -> postTag.getTagName().equalsIgnoreCase(tag.getTagName())))){
+                tagService.deleteTag(tag.getId());
+            }
+        }
     }
 
     public int countPostsForAuthorId(long authorId) {
@@ -102,14 +118,15 @@ public class PostService {
     }
 
     public List<Post> getPostsBy(String by, String value) {
-        List<Post> allPosts = postRepository.findAll();
+        List<Post> allPosts = getPostsByUserRole();
         List<Post> result = new ArrayList<>();
 
         if(by.equals("id")){
-            Optional<Post> byId = postRepository.findById(Long.valueOf(value));
-
-            if(byId.isPresent())
-                result.add(byId.get());
+            for(Post post : allPosts) {
+                if(post.getId() == Long.valueOf(value)){
+                    result.add(post);
+                }
+            }
         }else if(by.equals("tag")){
             for(Post post : allPosts) {
                 if(post.getTags().stream().anyMatch(tag -> tag.getTagName().equalsIgnoreCase(value))){
@@ -150,6 +167,41 @@ public class PostService {
 
         return result;
     }
+
+    public List<Post> orderPosts(List<Post> posts, String orderBy, String direction){
+        if(orderBy.equals("id")){
+            if(direction.equals("asc"))
+                posts.sort(Comparator.comparingLong(Post::getId));
+            else if(direction.equals("desc"))
+                posts.sort(Comparator.comparingLong(Post::getId).reversed());
+        }else if(orderBy.equals("content")){
+            if(direction.equals("asc"))
+                posts.sort(Comparator.comparing(Post::getPostContent));
+            else if(direction.equals("desc"))
+                posts.sort(Comparator.comparing(Post::getPostContent).reversed());
+        }
+
+        return posts;
+    }
+
+    public List<Post> getPostsByUserRole(){
+        List<Post> posts;
+
+        if (authoritiesService.hasRole("ADMIN"))
+            posts = getAllPosts();
+        else if (authoritiesService.hasRole("USER"))
+            posts = getAllPosts().stream()
+                    .filter(post -> post.getPrivacyType().equals(PrivacyType.PUBLIC) ||
+                            post.getAuthors().stream().anyMatch(author -> author.getUsername().equals(authoritiesService.getUsername())))
+                    .collect(Collectors.toList());
+        else
+            posts = getAllPosts().stream()
+                    .filter(post -> post.getPrivacyType().equals(PrivacyType.PUBLIC))
+                    .collect(Collectors.toList());
+
+        return posts;
+    }
+
 
     public void addAttachment(long postId, String filename){
         Optional<Post> postOptional = postRepository.findById(postId);

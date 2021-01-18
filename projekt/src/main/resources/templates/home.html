@@ -115,6 +115,12 @@
                         <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.username}"></option>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label for="selectPrivacy">Set privacy of your post</label>
+                      <select class="form-control" id="selectPrivacy" th:field="*{privacyType}">
+                        <option th:each="privacy : ${T(com.szymonowicz.projekt.enums.PrivacyType).values()}" th:value="${privacy}" th:text="${privacy}"></option>
+                      </select>
+                    </div>
                   </div>
                 </div>
                 <div class="text-right mt-2">

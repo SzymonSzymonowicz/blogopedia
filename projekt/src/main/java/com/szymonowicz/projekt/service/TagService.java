@@ -35,4 +35,13 @@ public class TagService {
 
         return tags;
     }
+
+    public void deleteTag(long id) {
+        Optional<Tag> tagOptional = tagRepository.findById(id);
+
+        if(tagOptional.isEmpty())
+            return;
+
+        tagRepository.delete(tagOptional.get());
+    }
 }

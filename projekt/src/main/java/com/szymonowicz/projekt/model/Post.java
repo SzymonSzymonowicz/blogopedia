@@ -1,5 +1,6 @@
 package com.szymonowicz.projekt.model;
 
+import com.szymonowicz.projekt.enums.PrivacyType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,4 +59,7 @@ public class Post {
             inverseJoinColumns = { @JoinColumn(name = "author_id")}
     )
     private Set<Author> authors = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    private PrivacyType privacyType;
 }

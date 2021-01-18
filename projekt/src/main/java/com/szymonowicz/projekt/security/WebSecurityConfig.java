@@ -1,5 +1,6 @@
 package com.szymonowicz.projekt.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,10 +10,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    public WebSecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
@@ -39,10 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        //.successHandler(authenticationSuccessHandler)
         http.authorizeRequests()
                 .antMatchers("/css/**","/static/**","/static/css/**","/static/css/**","/resources/**").permitAll()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/search/post").permitAll()
                 //.antMatchers("/").hasAnyAuthority("ADMIN", "USER")
 //                .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
 //                .antMatchers("/delete/**").hasAuthority("ADMIN")
