@@ -88,7 +88,7 @@ public class CommentService {
         Comment comment = commentOptional.get();
         String username = authoritiesService.getUsername();
 
-        return comment.getAuthor().equals(username);
+        return comment.getAuthor().getUsername().equals(username);
     }
 
 }

@@ -47,6 +47,18 @@ public class PostController {
         return "home";
     }
 
+    @GetMapping("/user")
+    public String userPosts(Model model){
+        List<Post> postsByUsername = postService.getPostsBy("author", authoritiesService.getUsername());
+
+        model.addAttribute("posts", postsByUsername);
+        model.addAttribute("authors", authorService.getAllAuthors());
+        model.addAttribute("postDTO", new PostDTO());
+        model.addAttribute("commentDTO", new CommentDTO());
+
+        return "home";
+    }
+
     @GetMapping("/order")
     public String orderPost(@RequestParam String orderBy, @RequestParam String direction, Model model){
         //List<Post> allPosts = postService.getAllPostsOrdered(orderBy, direction);

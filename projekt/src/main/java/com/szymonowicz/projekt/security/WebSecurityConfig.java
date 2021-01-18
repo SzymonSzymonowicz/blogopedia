@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/delete/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll()//.defaultSuccessUrl("/")
+                .formLogin().defaultSuccessUrl("/user").permitAll()
                 .and()
                 .logout().permitAll()
                 .and()

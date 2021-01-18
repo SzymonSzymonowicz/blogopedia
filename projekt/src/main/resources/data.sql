@@ -122,7 +122,7 @@ INSERT INTO comment(id,author_id,post_id,comment_content) VALUES (16,16,15,'Maec
 INSERT INTO comment(id,author_id,post_id,comment_content) VALUES (17,17,16,'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor.');
 INSERT INTO comment(id,author_id,post_id,comment_content) VALUES (18,18,17,'In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus.');
 INSERT INTO comment(id,author_id,post_id,comment_content) VALUES (19,19,18,'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.');
-INSERT INTO comment(id,author_id,post_id,comment_content) VALUES (20,20,20,'Ut at dolor quis odio consequat varius. Integer ac leo.');
+INSERT INTO comment(id,author_id,post_id,comment_content) VALUES (20,20,7,'Ut at dolor quis odio consequat varius. Integer ac leo.');
 
 
 

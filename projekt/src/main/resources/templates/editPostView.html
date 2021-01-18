@@ -37,6 +37,9 @@
             <div class="display-4 text-center">
               Edit post
             </div>
+            <div th:if="${!@postService.isMyPost(postId)}" class="display-5 text-center text-danger">
+              This is a public post, by editing it you will become a co-author.
+            </div>
           </div>
           <!-- card body -->
           <div class="">

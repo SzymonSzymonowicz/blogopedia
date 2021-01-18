@@ -47,12 +47,11 @@ public class CommentController {
     }
 
     @PostMapping("/comment/{id}")
-    public String addCommentToPost(@PathVariable(name = "id") long postId, @Valid @ModelAttribute("comment") CommentDTO commentDTO, Errors errors, Model model){
+    public String addCommentToPost(@PathVariable(name = "id") long postId, @Valid @ModelAttribute("commentDTO") CommentDTO commentDTO, Errors errors, Model model){
         if(errors.hasErrors()){
-            model.addAttribute("posts", postService.getAllPosts());
+            model.addAttribute("posts", postService.getPostsByUserRole());
             model.addAttribute("authors", authorService.getAllAuthors());
             model.addAttribute("postDTO", new PostDTO());
-            model.addAttribute("commentDTO", new CommentDTO());
 
             return "home";
         }
