@@ -164,8 +164,10 @@
                       <button type="submit" class="dropdown-item text-primary" >Edit</button>
                     </form>
                     <form method="get" th:action="@{/post/delete/{id}(id = ${post.id})}">
-                      <div sec:authorize="hasAnyAuthority('ADMIN')">
-                        <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                      <div sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+                        <th:block th:if="${@postService.isMyPost(post.id) || @authoritiesService.hasRole('ADMIN')}">
+                          <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                        </th:block>
                       </div>
                     </form>
                   </div>
@@ -238,8 +240,14 @@
                                   <button type="submit" class="dropdown-item text-primary" >Edit</button>
                                 </form>
                                 <form method="get" th:action="@{/comment/delete/{id}(id = ${singleComment.id})}">
-                                  <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                                  <button th:if="${@commentService.isMyComment(singleComment.id) || @authoritiesService.hasRole('ADMIN')}" type="submit" class="dropdown-item text-primary" >Delete</button>
                                 </form>
+
+                                <div sec:authorize="hasAnyAuthority('ADMIN', 'USER')">
+                                  <th:block th:if="${@postService.isMyPost(post.id)}">
+                                    <button type="submit" class="dropdown-item text-primary" >Delete</button>
+                                  </th:block>
+                                </div>
                               </div>
                             </div>
                           </div>

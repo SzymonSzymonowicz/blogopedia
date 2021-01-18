@@ -1,6 +1,7 @@
 package com.szymonowicz.projekt.service;
 
 import com.szymonowicz.projekt.model.Comment;
+import com.szymonowicz.projekt.model.Post;
 import com.szymonowicz.projekt.repository.CommentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ import java.util.Optional;
 @Slf4j
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final AuthoritiesService authoritiesService;
 
-    public CommentService(CommentRepository commentRepository){
+    public CommentService(CommentRepository commentRepository, AuthoritiesService authoritiesService){
         this.commentRepository = commentRepository;
+        this.authoritiesService = authoritiesService;
     }
 
     public void saveComment(Comment comment){
@@ -75,4 +78,17 @@ public class CommentService {
 
         return result;
     }
+
+    public boolean isMyComment(long commentId){
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
+
+        if(commentOptional.isEmpty())
+            return false;
+
+        Comment comment = commentOptional.get();
+        String username = authoritiesService.getUsername();
+
+        return comment.getAuthor().equals(username);
+    }
+
 }

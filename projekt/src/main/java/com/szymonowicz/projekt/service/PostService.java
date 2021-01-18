@@ -231,4 +231,16 @@ public class PostService {
 
         return tagsStr;
     }
+
+    public boolean isMyPost(long postId){
+        Optional<Post> postOptional = postRepository.findById(postId);
+
+        if(postOptional.isEmpty())
+            return false;
+
+        Post post = postOptional.get();
+        String username = authoritiesService.getUsername();
+
+        return post.getAuthors().stream().anyMatch(author -> author.getUsername().equals(username));
+    }
 }
