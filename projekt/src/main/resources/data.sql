@@ -1,7 +1,7 @@
 -- roles inserts
-INSERT INTO role(role_name) VALUES ('ADMIN');
-INSERT INTO role(role_name) VALUES ('USER');
-INSERT INTO role(role_name) VALUES ('ANONYMOUS');
+INSERT INTO role(id, role_name) VALUES (1, 'ADMIN');
+INSERT INTO role(id, role_name) VALUES (2, 'USER');
+INSERT INTO role(id, role_name) VALUES (3, 'ANONYMOUS');
 
 
 -- author inserts

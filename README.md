@@ -17,7 +17,7 @@
 * MySql
 
 #### Deploy:
-* [Heroku](https://blogopedia.herokuapp.com/) (currently having some issues with remote database thus initial posts are not loaded)
+* [Heroku](https://blogopedia.herokuapp.com/) 
 
 > Admin credentials: `admin` `admin` <br> Every user initialized by database credentials: `<username>` `password`
 
