@@ -1,7 +1,5 @@
 # Blogopedia (TJE lab project) Spring MVC
 
----
-
 ### Blog with postwall, each post can be either private or public. Public posts can be edited by anyone and after that the editor becomes co-author. He additionally gains rights to delete the post and manage all of its comments. After logging in all of user's posts are shown. Clicking homepage button guides to page with all of user's and all of public posts. Files can be attached to a post. The project fullfills most of given requirements.
 
 
@@ -23,9 +21,9 @@
 
 > Admin credentials: `admin` `admin` <br> Every user initialized by database credentials: `<username>` `password`
 
-# Screenshots
-
 ---
+
+# Screenshots
 
 ## Homepage not logged in (anonymous)
 ![fEXVO7.png](https://iili.io/fEXVO7.png)
