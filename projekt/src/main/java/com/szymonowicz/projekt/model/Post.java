@@ -27,7 +27,6 @@ public class Post {
     @Type(type = "org.hibernate.type.TextType")
     private String postContent;
 
-//    private String tags;
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.MERGE,

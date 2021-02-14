@@ -90,5 +90,4 @@ public class CommentService {
 
         return comment.getAuthor().getUsername().equals(username);
     }
-
 }

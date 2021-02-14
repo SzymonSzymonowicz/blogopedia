@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+
 @AllArgsConstructor
 public class MyUserDetails implements UserDetails {
     private Author author;

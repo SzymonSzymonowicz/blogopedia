@@ -3,6 +3,7 @@ package com.szymonowicz.projekt.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,9 +20,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    private String username;
-
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @ManyToOne
     private Author author;
 
     @Lob

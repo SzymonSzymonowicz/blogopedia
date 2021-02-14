@@ -13,6 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "comments")
 @Table(name="author")
 public class Author {
     @Id
@@ -23,6 +24,7 @@ public class Author {
     private String username;
     private String password;
 
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "author_role",
@@ -31,7 +33,7 @@ public class Author {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @ToString.Exclude
+    @JsonIgnore
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private List<Comment> comments = new ArrayList<>();

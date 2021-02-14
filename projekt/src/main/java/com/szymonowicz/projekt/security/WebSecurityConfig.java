@@ -1,6 +1,5 @@
 package com.szymonowicz.projekt.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,18 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    public WebSecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler) {
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
-    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -52,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //.successHandler(authenticationSuccessHandler)
         http.authorizeRequests()
                 .antMatchers("/css/**","/static/**","/static/css/**","/static/css/**","/resources/**").permitAll()
-                .antMatchers("/", "/search/post", "/registration").permitAll()
+                .antMatchers("/", "/search/post", "/registration", "/order").permitAll()
                 //.antMatchers("/").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
